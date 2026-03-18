@@ -475,8 +475,12 @@ async function autoRefresh() {
   console.log('자동 새로고침 완료');
 }
 
-app.listen(3000, async () => {
-  console.log('서버 실행 중 → http://localhost:3000');
-  await fetchAllNews();
-  setInterval(autoRefresh, CACHE_DURATION);
-});
+if (!IS_VERCEL) {
+  app.listen(3000, async () => {
+    console.log('서버 실행 중 → http://localhost:3000');
+    await fetchAllNews();
+    setInterval(autoRefresh, CACHE_DURATION);
+  });
+}
+
+module.exports = app;
